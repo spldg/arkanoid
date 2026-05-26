@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js'
+import { GameScene } from './GameScene'
 
 const app = new PIXI.Application({
     resizeTo: window,
@@ -12,6 +13,16 @@ if (!container) {
 }
 
 container.appendChild(app.view)
-app.ticker.add((delta) => {
+const gameScene = new GameScene()
+app.stage.addChild(gameScene)
+function resize() {
+    const width = window.innerWidth
+    const height = window.innerHeight
 
+    gameScene.resize(width, height)
+}
+resize()
+window.addEventListener('resize', resize)
+app.ticker.add(() => {
+    gameScene.update()
 })
