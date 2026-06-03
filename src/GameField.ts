@@ -16,7 +16,8 @@ export class GameField extends PIXI.Container {
 
         this.background.width = GAME_WIDTH
         this.background.height = GAME_HEIGHT
-
+        window.addEventListener('keydown', this.onKeyDown)
+        window.addEventListener('keyup', this.onKeyUp)
         this.addChild(
             this.background,
             this.platform,
@@ -42,6 +43,36 @@ export class GameField extends PIXI.Container {
 
         if (this.brickSystem.checkForCollisions(this.ball)) {
             this.ball.velocityY *= -1
+        }
+    }
+    private onKeyDown = (event: KeyboardEvent) => {
+        switch (event.code) {
+            case 'ArrowLeft':
+            case 'KeyA':
+                this.platform.moveLeft = true
+                break
+
+            case 'ArrowRight':
+            case 'KeyD':
+                this.platform.moveRight = true
+                break
+            case 'Space':
+                this.ball.launch()
+                break
+        }
+    }
+
+    private onKeyUp = (event: KeyboardEvent) => {
+        switch (event.code) {
+            case 'ArrowLeft':
+            case 'KeyA':
+                this.platform.moveLeft = false
+                break
+
+            case 'ArrowRight':
+            case 'KeyD':
+                this.platform.moveRight = false
+                break
         }
     }
 }

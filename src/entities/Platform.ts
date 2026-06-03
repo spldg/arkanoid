@@ -3,10 +3,10 @@ import { clamp } from '../utils/clamp'
 import { GAME_WIDTH, PLATFORM_X, PLATFORM_Y } from '../constants'
 
 export class Platform extends PIXI.Container {
+    public moveLeft = false
+    public moveRight = false
     private texture = PIXI.Texture.from('/assets/paddle.png')
     private speed = 8
-    private moveLeft = false
-    private moveRight = false
 
     private platform = new PIXI.NineSlicePlane(
         this.texture,
@@ -28,8 +28,6 @@ export class Platform extends PIXI.Container {
         this.addChild(
             this.platform,
         )
-        window.addEventListener('keydown', this.onKeyDown)
-        window.addEventListener('keyup', this.onKeyUp)
     }
     public update(delta: number) {
         if (this.moveLeft) {
@@ -45,33 +43,5 @@ export class Platform extends PIXI.Container {
             this.platform.width / 2,
             GAME_WIDTH - this.platform.width / 2
         )
-    }
-
-    private onKeyDown = (event: KeyboardEvent) => {
-        switch (event.code) {
-            case 'ArrowLeft':
-            case 'KeyA':
-                this.moveLeft = true
-                break
-
-            case 'ArrowRight':
-            case 'KeyD':
-                this.moveRight = true
-                break
-        }
-    }
-
-    private onKeyUp = (event: KeyboardEvent) => {
-        switch (event.code) {
-            case 'ArrowLeft':
-            case 'KeyA':
-                this.moveLeft = false
-                break
-
-            case 'ArrowRight':
-            case 'KeyD':
-                this.moveRight = false
-                break
-        }
     }
 }
