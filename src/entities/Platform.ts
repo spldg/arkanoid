@@ -4,7 +4,7 @@ import { GAME_WIDTH, PLATFORM_X, PLATFORM_Y } from '../constants'
 
 export class Platform extends PIXI.Container {
     private texture = PIXI.Texture.from('/assets/paddle.png')
-    private speed = 4
+    private speed = 8
     private moveLeft = false
     private moveRight = false
 
@@ -16,7 +16,7 @@ export class Platform extends PIXI.Container {
         8)
     constructor() {
         super()
-        this.platform.width = 100
+        this.platform.width = 85
         this.platform.height = 28
         this.platform.pivot.set(
             this.platform.width / 2,
@@ -31,13 +31,13 @@ export class Platform extends PIXI.Container {
         window.addEventListener('keydown', this.onKeyDown)
         window.addEventListener('keyup', this.onKeyUp)
     }
-    public update() {
+    public update(delta: number) {
         if (this.moveLeft) {
-            this.x -= this.speed
+            this.x -= this.speed * delta
         }
 
         if (this.moveRight) {
-            this.x += this.speed
+            this.x += this.speed * delta
         }
 
         this.x = clamp(

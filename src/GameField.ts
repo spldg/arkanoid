@@ -1,16 +1,47 @@
 import * as PIXI from 'pixi.js'
-import { GAME_HEIGHT, GAME_WIDTH } from './constants'
+import { GAME_HEIGHT, GAME_WIDTH, MAX_BOUNCE_SPEED } from './constants'
+import { Platform } from './entities/Platform'
+import { Ball } from './entities/Ball'
+import { collision } from './utils/collision'
+import { BrickSystem } from './entities/BrickSystem'
 
 export class GameField extends PIXI.Container {
     private background = PIXI.Sprite.from('/assets/background.png')
+    private platform = new Platform()
+    private ball = new Ball()
+    private brickSystem = new BrickSystem()
 
     constructor() {
         super()
+
         this.background.width = GAME_WIDTH
         this.background.height = GAME_HEIGHT
 
         this.addChild(
             this.background,
+            this.platform,
+            this.ball,
+            this.brickSystem,
         )
+    }
+
+    public update(delta: number) {
+        this.platform.update(delta)
+        this.ball.update(delta)
+
+        // temporary collision test
+
+        if (collision(this.platform, this.ball)
+        ) {
+            if (this.ball.velocityY > 0) {
+                const hitPosition = (this.ball.x - this.platform.x) / (this.platform.width / 2)
+                this.ball.velocityX = hitPosition * MAX_BOUNCE_SPEED
+                this.ball.velocityY = -Math.abs(this.ball.velocityY)
+            }
+        }
+
+        if (this.brickSystem.checkForCollisions(this.ball)) {
+            this.ball.velocityY *= -1
+        }
     }
 }

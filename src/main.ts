@@ -23,6 +23,6 @@ function resize() {
 }
 resize()
 window.addEventListener('resize', resize)
-app.ticker.add(() => {
-    gameScene.update()
+app.ticker.add((delta) => {
+    gameScene.update(delta)
 })

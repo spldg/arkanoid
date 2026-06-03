@@ -1,4 +1,5 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { extensions } from 'pixi.js'
@@ -29,7 +30,15 @@ export default {
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
-        })
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from:'public/assets',
+                    to:'assets',
+                },
+            ],
+        }),
     ],
 
     output: {
