@@ -1,11 +1,12 @@
 import * as PIXI from 'pixi.js'
+import gsap from 'gsap'
 import { BRICK_HEIGHT, BRICK_WIDTH, firstLevel, GAME_WIDTH, startY } from '../constants'
 import { Brick } from './Brick'
 import { Ball } from './Ball'
 import { collision } from '../utils/collision'
 
 export class BrickSystem extends PIXI.Container {
-    private bricks: Brick [] = []
+    private bricks: Brick[] = []
     constructor() {
         super()
         this.draw()
@@ -15,10 +16,15 @@ export class BrickSystem extends PIXI.Container {
             const brick = this.bricks[i]
 
             if (!collision(brick, ball)) continue
-
             this.bricks.splice(i, 1)
-            this.removeChild(brick)
-            brick.destroy()
+            gsap.to(brick, {
+                alpha: 0,
+                duration: 0.15,
+                onComplete: () => {
+                    this.removeChild(brick)
+                    brick.destroy()
+                }
+            })
             return true
         }
 

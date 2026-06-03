@@ -1,9 +1,9 @@
 import * as PIXI from 'pixi.js'
-import { GAME_HEIGHT, GAME_WIDTH, PLATFORM_X, PLATFORM_Y } from '../constants'
+import { GAME_WIDTH } from '../constants'
 
 export class Ball extends PIXI.Container {
-    public velocityX = 6
-    public velocityY = 10
+    public velocityX = 0
+    public velocityY = 0
     private sprite = PIXI.Sprite.from('/assets/ball.png')
 
     constructor() {

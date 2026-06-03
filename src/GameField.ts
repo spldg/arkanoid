@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import { GAME_HEIGHT, GAME_WIDTH, MAX_BOUNCE_SPEED, PLATFORM_X, PLATFORM_Y } from './constants'
+import { GAME_HEIGHT, GAME_WIDTH, MAX_BOUNCE_SPEED } from './constants'
 import { Platform } from './entities/Platform'
 import { Ball } from './entities/Ball'
 import { collision } from './utils/collision'
@@ -29,12 +29,14 @@ export class GameField extends PIXI.Container {
 
     public update(delta: number) {
         this.platform.update(delta)
-        this.ball.update(delta)
 
-        if(!this.isLaunched) {
+        if (!this.isLaunched) {
             this.ball.x = this.platform.x
-            this.ball.y = this.platform.y - 20
+            this.ball.y = this.platform.y - this.platform.height / 2 - this.ball.radius
+            return
         }
+
+        this.ball.update(delta)
 
         // temporary collision test
 
