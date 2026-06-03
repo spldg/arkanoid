@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import { GAME_HEIGHT, GAME_WIDTH, MAX_BOUNCE_SPEED } from './constants'
+import { GAME_HEIGHT, GAME_WIDTH, MAX_BOUNCE_SPEED, PLATFORM_X, PLATFORM_Y } from './constants'
 import { Platform } from './entities/Platform'
 import { Ball } from './entities/Ball'
 import { collision } from './utils/collision'
@@ -10,6 +10,7 @@ export class GameField extends PIXI.Container {
     private platform = new Platform()
     private ball = new Ball()
     private brickSystem = new BrickSystem()
+    private isLaunched = false
 
     constructor() {
         super()
@@ -30,6 +31,11 @@ export class GameField extends PIXI.Container {
         this.platform.update(delta)
         this.ball.update(delta)
 
+        if(!this.isLaunched) {
+            this.ball.x = this.platform.x
+            this.ball.y = this.platform.y - 20
+        }
+
         // temporary collision test
 
         if (collision(this.platform, this.ball)
@@ -44,7 +50,12 @@ export class GameField extends PIXI.Container {
         if (this.brickSystem.checkForCollisions(this.ball)) {
             this.ball.velocityY *= -1
         }
+
+        if (this.ball.y - this.ball.radius >= GAME_HEIGHT) {
+            this.reset()
+        }
     }
+
     private onKeyDown = (event: KeyboardEvent) => {
         switch (event.code) {
             case 'ArrowLeft':
@@ -57,7 +68,7 @@ export class GameField extends PIXI.Container {
                 this.platform.moveRight = true
                 break
             case 'Space':
-                this.ball.launch()
+                this.launch()
                 break
         }
     }
@@ -74,5 +85,19 @@ export class GameField extends PIXI.Container {
                 this.platform.moveRight = false
                 break
         }
+    }
+
+    private launch(): void {
+        if (this.isLaunched) return
+
+        this.isLaunched = true
+        this.ball.velocityX = 6
+        this.ball.velocityY = -10
+    }
+
+    private reset(): void {
+        this.isLaunched = false
+        this.ball.velocityX = 0
+        this.ball.velocityY = 0
     }
 }
