@@ -5,18 +5,13 @@ import { GAME_WIDTH, PLATFORM_X, PLATFORM_Y } from '../constants'
 export class Platform extends PIXI.Container {
     public moveLeft = false
     public moveRight = false
-    private texture = PIXI.Texture.from('/assets/paddle.png')
+    private texture = PIXI.Loader.shared.resources.game.textures?.['paddle.png']
     private speed = 8
-
-    private platform = new PIXI.NineSlicePlane(
-        this.texture,
-        26,
-        8,
-        25,
-        8)
+    private platform
     constructor() {
         super()
-        this.platform.width = 85
+        this.platform = new PIXI.NineSlicePlane(this.texture!, 2, 0, 2, 0)
+        this.platform.width = 70
         this.platform.height = 28
         this.platform.pivot.set(
             this.platform.width / 2,

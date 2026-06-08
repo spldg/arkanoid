@@ -1,29 +1,41 @@
 import * as PIXI from 'pixi.js'
-import { GAME_HEIGHT, GAME_WIDTH, MAX_BOUNCE_SPEED } from './constants'
+import { FRAME_SIZE, GAME_HEIGHT, MAX_BOUNCE_SPEED } from './constants'
 import { Platform } from './entities/Platform'
 import { Ball } from './entities/Ball'
 import { collision } from './utils/collision'
-import { BrickSystem } from './entities/BrickSystem'
+import { BrickSystem } from './systems/BrickSystem'
+import { EventEmitter } from './utils/EventEmitter'
+import { ScoreSystem } from './systems/ScoreSystem'
+import { GameFrame } from './entities/GameFrame'
 
 export class GameField extends PIXI.Container {
-    private background = PIXI.Sprite.from('/assets/background.png')
+    private emitter = new EventEmitter()
+    private background = new GameFrame()
     private platform = new Platform()
     private ball = new Ball()
+    private scoreSystem = new ScoreSystem()
     private brickSystem = new BrickSystem()
     private isLaunched = false
+    private score = 0
 
     constructor() {
         super()
 
-        this.background.width = GAME_WIDTH
-        this.background.height = GAME_HEIGHT
+        this.background.position.set(-FRAME_SIZE, -FRAME_SIZE)
         window.addEventListener('keydown', this.onKeyDown)
         window.addEventListener('keyup', this.onKeyUp)
+        this.emitter.on('ballLost', () => {
+            this.reset()
+        })
+        this.emitter.on('brickHit', () => {
+            this.scoreSystem.setScore(this.score += 10)
+        })
         this.addChild(
             this.background,
             this.platform,
             this.ball,
             this.brickSystem,
+            this.scoreSystem,
         )
     }
 
@@ -50,11 +62,12 @@ export class GameField extends PIXI.Container {
         }
 
         if (this.brickSystem.checkForCollisions(this.ball)) {
+            this.emitter.emit('brickHit')
             this.ball.velocityY *= -1
         }
 
         if (this.ball.y - this.ball.radius >= GAME_HEIGHT) {
-            this.reset()
+            this.emitter.emit('ballLost')
         }
     }
 

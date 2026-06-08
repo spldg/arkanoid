@@ -4,7 +4,9 @@ import { GAME_WIDTH } from '../constants'
 export class Ball extends PIXI.Container {
     public velocityX = 0
     public velocityY = 0
-    private sprite = PIXI.Sprite.from('/assets/ball.png')
+    public readonly radius
+    private readonly ballSize = 16
+    private sprite = new PIXI.Sprite(PIXI.Loader.shared.resources.game.textures?.['ball.png'])
 
     constructor() {
         super()
@@ -13,13 +15,10 @@ export class Ball extends PIXI.Container {
         this.sprite.width = 16
         this.sprite.height = 16
         this.sprite.anchor.set(0.5)
+        this.radius = this.ballSize / 2
         this.addChild(
             this.sprite
         )
-    }
-
-    public get radius(): number {
-        return this.sprite.width / 2
     }
 
     public update(delta: number) {

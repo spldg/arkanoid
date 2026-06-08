@@ -3,7 +3,7 @@ import { GameScene } from './GameScene'
 
 const app = new PIXI.Application({
     resizeTo: window,
-    backgroundColor: 0x8a8888,
+    backgroundColor: 0x202020,
     antialias: true
 })
 
@@ -13,16 +13,24 @@ if (!container) {
 }
 
 container.appendChild(app.view)
-const gameScene = new GameScene()
-app.stage.addChild(gameScene)
-function resize() {
-    const width = window.innerWidth
-    const height = window.innerHeight
 
-    gameScene.resize(width, height)
-}
-resize()
-window.addEventListener('resize', resize)
-app.ticker.add((delta) => {
-    gameScene.update(delta)
-})
+PIXI.Loader.shared
+    .add('game', '/assets/atlas.json')
+    .load(() => {
+        const gameScene = new GameScene()
+        app.stage.addChild(gameScene)
+
+        function resize() {
+            const width = window.innerWidth
+            const height = window.innerHeight
+
+            gameScene.resize(width, height)
+        }
+
+        resize()
+        window.addEventListener('resize', resize)
+
+        app.ticker.add((delta) => {
+            gameScene.update(delta)
+        })
+    })
