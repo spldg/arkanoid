@@ -16,6 +16,7 @@ type ApplyPowerUpOptions = {
     balls: Ball[]
 }
 export class PowerUpSystem {
+    private platformSizetimer?: gsap.core.Tween
     public dropRandomPowerUp(): DroppedPowerUp {
         const type = this.rollPowerUpType()
         const sprite = this.createAnimatedPowerUp(type)
@@ -27,25 +28,14 @@ export class PowerUpSystem {
         switch (options.type) {
             case 'threeBall': {
                 const mainBall = options.balls[0]
-                const newBalls = this.threeBall(mainBall)
 
-                options.balls.push(...newBalls)
-
-                return newBalls
+                return this.threeBall(mainBall)
             }
             case 'extend':
-                options.platform.resizeTo(100)
-
-                gsap.delayedCall(10, () => {
-                    options.platform.resizeTo(70)
-                })
+                this.applyPlatformSize(options.platform, 100)
                 break
             case 'tiny':
-                options.platform.resizeTo(45)
-
-                gsap.delayedCall(10, () => {
-                    options.platform.resizeTo(70)
-                })
+                this.applyPlatformSize(options.platform, 45)
                 break
             case 'slow':
                 for (const ball of options.balls) {
@@ -73,16 +63,27 @@ export class PowerUpSystem {
         return []
     }
 
+    private applyPlatformSize(platform: Platform, width: number): void {
+        this.platformSizetimer?.kill()
+
+        platform.resizeTo(width)
+
+        this.platformSizetimer = gsap.delayedCall(10, () => {
+            platform.resizeTo(70)
+            this.platformSizetimer = undefined
+        })
+    }
+
     private threeBall(ball: Ball) {
         const secondBall = new Ball()
         const thirdBall = new Ball()
         secondBall.position.set(ball.x, ball.y)
         thirdBall.position.set(ball.x, ball.y)
 
-        secondBall.velocityY = 10
+        secondBall.velocityY = ball.velocityY
         secondBall.velocityX = 6
 
-        thirdBall.velocityY = -10
+        thirdBall.velocityY = ball.velocityY
         thirdBall.velocityX = -6
 
         return [secondBall, thirdBall]

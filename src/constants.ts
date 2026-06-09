@@ -1,4 +1,4 @@
-import { PowerUpType } from './systems/PowerUpSystem'
+import type { PowerUpType } from './systems/PowerUpSystem'
 
 // sizes
 

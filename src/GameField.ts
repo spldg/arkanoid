@@ -43,6 +43,11 @@ export class GameField extends PIXI.Container {
     public update(delta: number) {
         this.platform.update(delta)
 
+        if (!this.isLaunched) {
+            this.ball.x = this.platform.x
+            this.ball.y = this.platform.y - this.platform.height / 2 - this.ball.radius
+            return
+        }
 
         for (const ball of this.ballArr) {
             ball.update(delta)
@@ -59,7 +64,7 @@ export class GameField extends PIXI.Container {
                 this.emitter.emit('brickHit')
                 ball.velocityY *= -1
 
-                if (Math.random() < 0.43) {
+                if (Math.random() < 0.2) {
                     const powerUp = this.pUpSystem.dropRandomPowerUp()
                     powerUp.sprite.position.set(ball.x, ball.y)
                     this.powerUps.push(powerUp)
@@ -73,6 +78,13 @@ export class GameField extends PIXI.Container {
 
             powerUp.sprite.y += 1 * delta
 
+            if (powerUp.sprite.y >= GAME_HEIGHT) {
+                this.removeChild(powerUp.sprite)
+                powerUp.sprite.destroy()
+                PIXI.utils.removeItems(this.powerUps, i, 1)
+                continue
+            }
+
             if (collision(powerUp.sprite, this.platform)) {
                 const newBalls = this.pUpSystem.applyPowerUp({
                     type: powerUp.type,
@@ -81,20 +93,16 @@ export class GameField extends PIXI.Container {
                 })
 
                 if (newBalls.length > 0) {
+                    this.ballArr.push(...newBalls)
                     this.addChild(...newBalls)
                 }
                 this.removeChild(powerUp.sprite)
                 powerUp.sprite.destroy()
-
                 PIXI.utils.removeItems(this.powerUps, i, 1)
+
             }
         }
 
-        if (!this.isLaunched) {
-            this.ball.x = this.platform.x
-            this.ball.y = this.platform.y - this.platform.height / 2 - this.ball.radius
-            return
-        }
 
         this.removeLostBalls()
     }
@@ -144,7 +152,13 @@ export class GameField extends PIXI.Container {
             ball.destroy()
         }
 
+        for (const powerUp of this.powerUps) {
+            this.removeChild(powerUp.sprite)
+            powerUp.sprite.destroy()
+        }
+
         this.ballArr.length = 0
+        this.powerUps.length = 0
 
         this.ball = new Ball()
         this.ball.velocityX = 0

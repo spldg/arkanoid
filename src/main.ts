@@ -15,7 +15,7 @@ if (!container) {
 container.appendChild(app.view)
 
 PIXI.Loader.shared
-    .add('game', '/assets/atlas.json')
+    .add('game', './assets/atlas.json')
     .load(() => {
         const gameScene = new GameScene()
         app.stage.addChild(gameScene)

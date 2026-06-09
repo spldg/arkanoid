@@ -43,6 +43,8 @@ export class Platform extends PIXI.Container {
     }
 
     public resizeTo(targetWidth: number): void {
+        gsap.killTweensOf(this.platform)
+
         gsap.to(this.platform, {
             width: targetWidth,
             duration: 0.25,
