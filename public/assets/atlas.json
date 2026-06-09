@@ -288,6 +288,150 @@
 				"y": 0.5
 			}
 		},
+		"pdowntiny_0.png": {
+			"frame": {
+				"x": 114,
+				"y": 1,
+				"w": 16,
+				"h": 11
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 3,
+				"w": 16,
+				"h": 11
+			},
+			"sourceSize": {
+				"w": 16,
+				"h": 16
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"pdowntiny_1.png": {
+			"frame": {
+				"x": 133,
+				"y": 1,
+				"w": 16,
+				"h": 11
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 3,
+				"w": 16,
+				"h": 11
+			},
+			"sourceSize": {
+				"w": 16,
+				"h": 16
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"pdowntiny_2.png": {
+			"frame": {
+				"x": 152,
+				"y": 1,
+				"w": 16,
+				"h": 11
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 3,
+				"w": 16,
+				"h": 11
+			},
+			"sourceSize": {
+				"w": 16,
+				"h": 16
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"pdowntiny_3.png": {
+			"frame": {
+				"x": 171,
+				"y": 1,
+				"w": 16,
+				"h": 11
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 3,
+				"w": 16,
+				"h": 11
+			},
+			"sourceSize": {
+				"w": 16,
+				"h": 16
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"pdowntiny_4.png": {
+			"frame": {
+				"x": 190,
+				"y": 1,
+				"w": 16,
+				"h": 11
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 3,
+				"w": 16,
+				"h": 11
+			},
+			"sourceSize": {
+				"w": 16,
+				"h": 16
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"pdowntiny_5.png": {
+			"frame": {
+				"x": 209,
+				"y": 1,
+				"w": 16,
+				"h": 11
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 3,
+				"w": 16,
+				"h": 11
+			},
+			"sourceSize": {
+				"w": 16,
+				"h": 16
+			},
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
 		"pupextend_0.png": {
 			"frame": {
 				"x": 340,

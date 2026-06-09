@@ -7,7 +7,7 @@ import { BrickSystem } from './systems/BrickSystem'
 import { EventEmitter } from './utils/EventEmitter'
 import { ScoreSystem } from './systems/ScoreSystem'
 import { GameFrame } from './entities/GameFrame'
-import { PowerUpSystem } from './systems/PowerUpSystem'
+import { DroppedPowerUp, PowerUpSystem } from './systems/PowerUpSystem'
 
 export class GameField extends PIXI.Container {
     private emitter = new EventEmitter()
@@ -18,7 +18,7 @@ export class GameField extends PIXI.Container {
     private brickSystem = new BrickSystem()
     private pUpSystem = new PowerUpSystem()
     private ballArr: Ball[] = []
-    private powerUps: PIXI.AnimatedSprite[] = []
+    private powerUps: DroppedPowerUp[] = []
     private isLaunched = false
     private score = 0
 
@@ -62,12 +62,18 @@ export class GameField extends PIXI.Container {
                 this.emitter.emit('brickHit')
                 ball.velocityY *= -1
 
-                // temporary roll
+                if (Math.random() < 0.25) {
+                    const powerUp = this.pUpSystem.dropRandomPowerUp()
+                    powerUp.sprite.position.set(ball.x, ball.y)
+
+                    this.powerUps.push(powerUp)
+                    this.addChild(powerUp.sprite)
+                }
             }
         }
 
         for (const powerUp of this.powerUps) {
-            powerUp.y += 1 * delta
+            powerUp.sprite.y += 1 * delta
         }
         if (!this.isLaunched) {
             this.ball.x = this.platform.x

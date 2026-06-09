@@ -1,5 +1,7 @@
 import { PowerUpType } from './systems/PowerUpSystem'
+
 // sizes
+
 export const GAME_WIDTH = 352
 export const GAME_HEIGHT = 800
 
@@ -26,7 +28,7 @@ export const BRICK_WIDTH = 48
 
 //power up settings
 
-export const POWER_UP_Table: { type: PowerUpType; weight: number }[] = [
+export const POWER_UP_TABLE: { type: PowerUpType; weight: number }[] = [
     { type: 'threeBall', weight: 30 },
     { type: 'extend', weight: 25 },
     { type: 'fast', weight: 20 },
