@@ -28,9 +28,6 @@ export class GameField extends PIXI.Container {
         this.background.position.set(-FRAME_SIZE, -FRAME_SIZE)
         window.addEventListener('keydown', this.onKeyDown)
         window.addEventListener('keyup', this.onKeyUp)
-        this.emitter.on('ballLost', () => {
-            this.reset()
-        })
         this.emitter.on('brickHit', () => {
             this.scoreSystem.setScore(this.score += 10)
         })
@@ -62,31 +59,44 @@ export class GameField extends PIXI.Container {
                 this.emitter.emit('brickHit')
                 ball.velocityY *= -1
 
-                if (Math.random() < 0.25) {
+                if (Math.random() < 0.43) {
                     const powerUp = this.pUpSystem.dropRandomPowerUp()
                     powerUp.sprite.position.set(ball.x, ball.y)
-
                     this.powerUps.push(powerUp)
                     this.addChild(powerUp.sprite)
                 }
             }
         }
 
-        for (const powerUp of this.powerUps) {
+        for (let i = this.powerUps.length - 1; i >= 0; i--) {
+            const powerUp = this.powerUps[i]
+
             powerUp.sprite.y += 1 * delta
+
+            if (collision(powerUp.sprite, this.platform)) {
+                const newBalls = this.pUpSystem.applyPowerUp({
+                    type: powerUp.type,
+                    platform: this.platform,
+                    balls: this.ballArr,
+                })
+
+                if (newBalls.length > 0) {
+                    this.addChild(...newBalls)
+                }
+                this.removeChild(powerUp.sprite)
+                powerUp.sprite.destroy()
+
+                PIXI.utils.removeItems(this.powerUps, i, 1)
+            }
         }
+
         if (!this.isLaunched) {
             this.ball.x = this.platform.x
             this.ball.y = this.platform.y - this.platform.height / 2 - this.ball.radius
             return
         }
-        // temporary collision test
 
-
-
-        if (this.ball.y - this.ball.radius >= GAME_HEIGHT) {
-            this.emitter.emit('ballLost')
-        }
+        this.removeLostBalls()
     }
 
     private onKeyDown = (event: KeyboardEvent) => {
@@ -129,8 +139,36 @@ export class GameField extends PIXI.Container {
     }
 
     private reset(): void {
-        this.isLaunched = false
+        for (const ball of this.ballArr) {
+            this.removeChild(ball)
+            ball.destroy()
+        }
+
+        this.ballArr.length = 0
+
+        this.ball = new Ball()
         this.ball.velocityX = 0
         this.ball.velocityY = 0
+
+        this.ballArr.push(this.ball)
+        this.addChild(this.ball)
+        this.isLaunched = false
+    }
+
+    private removeLostBalls(): void {
+        for (let i = this.ballArr.length - 1; i >= 0; i--) {
+            const ball = this.ballArr[i]
+
+            if (ball.y - ball.radius >= GAME_HEIGHT) {
+                this.removeChild(ball)
+                ball.destroy()
+
+                PIXI.utils.removeItems(this.ballArr, i, 1)
+            }
+        }
+
+        if (this.ballArr.length === 0) {
+            this.reset()
+        }
     }
 }

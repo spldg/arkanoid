@@ -1,6 +1,8 @@
 import * as PIXI from 'pixi.js'
+import gsap from 'gsap'
 import { Ball } from '../entities/Ball'
 import { POWER_UP_FRAMES, POWER_UP_TABLE } from '../constants'
+import { Platform } from '../entities/Platform'
 
 export type PowerUpType = 'threeBall' | 'extend' | 'tiny' | 'slow' | 'fast'
 export type DroppedPowerUp = {
@@ -8,6 +10,11 @@ export type DroppedPowerUp = {
     sprite: PIXI.AnimatedSprite
 }
 
+type ApplyPowerUpOptions = {
+    type: PowerUpType
+    platform: Platform
+    balls: Ball[]
+}
 export class PowerUpSystem {
     public dropRandomPowerUp(): DroppedPowerUp {
         const type = this.rollPowerUpType()
@@ -16,24 +23,74 @@ export class PowerUpSystem {
         return { type, sprite }
     }
 
-    public threeBall(ball: Ball) {
+    public applyPowerUp(options: ApplyPowerUpOptions) {
+        switch (options.type) {
+            case 'threeBall': {
+                const mainBall = options.balls[0]
+                const newBalls = this.threeBall(mainBall)
+
+                options.balls.push(...newBalls)
+
+                return newBalls
+            }
+            case 'extend':
+                options.platform.resizeTo(100)
+
+                gsap.delayedCall(10, () => {
+                    options.platform.resizeTo(70)
+                })
+                break
+            case 'tiny':
+                options.platform.resizeTo(45)
+
+                gsap.delayedCall(10, () => {
+                    options.platform.resizeTo(70)
+                })
+                break
+            case 'slow':
+                for (const ball of options.balls) {
+                    ball.velocityX *= 0.70
+                    ball.velocityY *= 0.70
+
+                    gsap.delayedCall(10, () => {
+                        ball.velocityX /= 0.70
+                        ball.velocityY /= 0.70
+                    })
+                }
+                break
+            case 'fast':
+                for (const ball of options.balls) {
+                    ball.velocityX *= 1.25
+                    ball.velocityY *= 1.25
+
+                    gsap.delayedCall(10, () => {
+                        ball.velocityX /= 1.25
+                        ball.velocityY /= 1.25
+                    })
+                }
+                break
+        }
+        return []
+    }
+
+    private threeBall(ball: Ball) {
         const secondBall = new Ball()
         const thirdBall = new Ball()
         secondBall.position.set(ball.x, ball.y)
         thirdBall.position.set(ball.x, ball.y)
 
-        secondBall.velocityY = ball.velocityY
+        secondBall.velocityY = 10
         secondBall.velocityX = 6
 
-        thirdBall.velocityY = ball.velocityY
+        thirdBall.velocityY = -10
         thirdBall.velocityX = -6
 
         return [secondBall, thirdBall]
     }
 
     private rollPowerUpType(): PowerUpType {
-        const TotalWeight = POWER_UP_TABLE.reduce((sum, item) => sum + item.weight, 0)
-        let roll = Math.random() * TotalWeight
+        const totalWeight = POWER_UP_TABLE.reduce((sum, item) => sum + item.weight, 0)
+        let roll = Math.random() * totalWeight
 
         for (const item of POWER_UP_TABLE) {
             roll -= item.weight

@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js'
+import gsap from 'gsap'
 import { clamp } from '../utils/clamp'
 import { GAME_WIDTH, PLATFORM_X, PLATFORM_Y } from '../constants'
 
@@ -24,6 +25,7 @@ export class Platform extends PIXI.Container {
             this.platform,
         )
     }
+
     public update(delta: number) {
         if (this.moveLeft) {
             this.x -= this.speed * delta
@@ -38,5 +40,16 @@ export class Platform extends PIXI.Container {
             this.platform.width / 2,
             GAME_WIDTH - this.platform.width / 2
         )
+    }
+
+    public resizeTo(targetWidth: number): void {
+        gsap.to(this.platform, {
+            width: targetWidth,
+            duration: 0.25,
+            ease: 'power2.out',
+            onUpdate: () => {
+                this.platform.pivot.x = this.platform.width / 2
+            }
+        })
     }
 }
