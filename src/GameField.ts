@@ -7,6 +7,7 @@ import { BrickSystem } from './systems/BrickSystem'
 import { EventEmitter } from './utils/EventEmitter'
 import { ScoreSystem } from './systems/ScoreSystem'
 import { GameFrame } from './entities/GameFrame'
+import { PowerUpSystem } from './systems/PowerUpSystem'
 
 export class GameField extends PIXI.Container {
     private emitter = new EventEmitter()
@@ -15,12 +16,15 @@ export class GameField extends PIXI.Container {
     private ball = new Ball()
     private scoreSystem = new ScoreSystem()
     private brickSystem = new BrickSystem()
+    private pUpSystem = new PowerUpSystem()
+    private ballArr: Ball[] = []
+    private powerUps: PIXI.AnimatedSprite[] = []
     private isLaunched = false
     private score = 0
 
     constructor() {
         super()
-
+        this.ballArr.push(this.ball)
         this.background.position.set(-FRAME_SIZE, -FRAME_SIZE)
         window.addEventListener('keydown', this.onKeyDown)
         window.addEventListener('keyup', this.onKeyUp)
@@ -42,29 +46,37 @@ export class GameField extends PIXI.Container {
     public update(delta: number) {
         this.platform.update(delta)
 
+
+        for (const ball of this.ballArr) {
+            ball.update(delta)
+            if (collision(this.platform, ball)
+            ) {
+                if (ball.velocityY > 0) {
+                    const hitPosition = (ball.x - this.platform.x) / (this.platform.width / 2)
+                    ball.velocityX = hitPosition * MAX_BOUNCE_SPEED
+                    ball.velocityY = -Math.abs(ball.velocityY)
+                }
+            }
+
+            if (this.brickSystem.checkForCollisions(ball)) {
+                this.emitter.emit('brickHit')
+                ball.velocityY *= -1
+
+                // temporary roll
+            }
+        }
+
+        for (const powerUp of this.powerUps) {
+            powerUp.y += 1 * delta
+        }
         if (!this.isLaunched) {
             this.ball.x = this.platform.x
             this.ball.y = this.platform.y - this.platform.height / 2 - this.ball.radius
             return
         }
-
-        this.ball.update(delta)
-
         // temporary collision test
 
-        if (collision(this.platform, this.ball)
-        ) {
-            if (this.ball.velocityY > 0) {
-                const hitPosition = (this.ball.x - this.platform.x) / (this.platform.width / 2)
-                this.ball.velocityX = hitPosition * MAX_BOUNCE_SPEED
-                this.ball.velocityY = -Math.abs(this.ball.velocityY)
-            }
-        }
 
-        if (this.brickSystem.checkForCollisions(this.ball)) {
-            this.emitter.emit('brickHit')
-            this.ball.velocityY *= -1
-        }
 
         if (this.ball.y - this.ball.radius >= GAME_HEIGHT) {
             this.emitter.emit('ballLost')
