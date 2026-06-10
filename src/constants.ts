@@ -24,7 +24,7 @@ export const startY = 50
 
 export const PLATFORM_X = GAME_WIDTH / 2
 export const PLATFORM_Y = GAME_HEIGHT - 80
-export const MAX_BOUNCE_SPEED = 8
+export const MAX_BOUNCE_SPEED = 7
 
 // brick settings
 
@@ -102,17 +102,17 @@ export const levels = [
         [1, 1, 1, 1, 1, 1],
     ],
     [
-        [1, 0, 1, 1, 0, 1],
-        [1, 1, 0, 0, 1, 1],
-        [0, 1, 1, 1, 1, 0],
-        [1, 0, 1, 1, 0, 1],
-        [1, 1, 1, 1, 1, 1],
-    ],
-    [
         [0, 0, 0, 0, 0, 0],
         [1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1],
         [0, 0, 1, 1, 0, 0],
+    ],
+    [
+        [1, 0, 1, 1, 0, 1],
+        [1, 1, 0, 0, 1, 1],
+        [0, 1, 1, 1, 1, 0],
+        [1, 0, 1, 1, 0, 1],
+        [1, 1, 1, 1, 1, 1],
     ],
 ]

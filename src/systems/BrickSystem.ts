@@ -5,7 +5,10 @@ import { Brick } from '../entities/Brick'
 import { Ball } from '../entities/Ball'
 import { collision } from '../utils/collision'
 
-export type BrickHitResult = 'breakable' | 'solid' | null
+export type BrickHitResult = {
+    type: 'breakable' | 'solid'
+    brick: Brick
+} | null
 
 export class BrickSystem extends PIXI.Container {
     private bricks: Brick[] = []
@@ -19,7 +22,7 @@ export class BrickSystem extends PIXI.Container {
             if (!collision(brick, ball)) continue
 
             if (!brick.isBreakable) {
-                return 'solid'
+                return { type: 'solid', brick }
             }
 
             PIXI.utils.removeItems(this.bricks, i, 1)
@@ -34,9 +37,8 @@ export class BrickSystem extends PIXI.Container {
             })
 
             this.playDestroyAnimation(brick)
-            return 'breakable'
+            return { type: 'breakable', brick }
         }
-
         return null
     }
 

@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js'
 import { BRICK_SCORE, FRAME_SIZE, GAME_HEIGHT, INITIAL_LIVES, levels, MAX_BOUNCE_SPEED, PLATFORM_X, STAGE_CLEAR_SCORE } from './constants'
 import { Platform } from './entities/Platform'
 import { Ball } from './entities/Ball'
-import { collision } from './utils/collision'
+import { collision, resolveBallBrickCollision } from './utils/collision'
 import { BrickSystem } from './systems/BrickSystem'
 import { GameFrame } from './entities/GameFrame'
 import { DroppedPowerUp, PowerUpSystem } from './systems/PowerUpSystem'
@@ -73,14 +73,10 @@ export class GameField extends PIXI.Container {
 
             if (brickHit) {
                 hit2Fx.play()
-                if (ball.velocityY > 0) {
-                    ball.y -= ball.radius
-                } else {
-                    ball.y += ball.radius
-                }
-                ball.velocityY *= -1
 
-                if (brickHit === 'breakable') {
+                resolveBallBrickCollision(ball, brickHit.brick)
+
+                if (brickHit.type === 'breakable') {
                     this.score += BRICK_SCORE * (this.levelIndex + 1)
                     this.emit('scoreChange', this.score)
 
