@@ -1,46 +1,55 @@
 import * as PIXI from 'pixi.js'
-import { FRAME_SIZE, GAME_HEIGHT, MAX_BOUNCE_SPEED } from './constants'
+import { BRICK_SCORE, FRAME_SIZE, GAME_HEIGHT, INITIAL_LIVES, levels, MAX_BOUNCE_SPEED, PLATFORM_X, STAGE_CLEAR_SCORE } from './constants'
 import { Platform } from './entities/Platform'
 import { Ball } from './entities/Ball'
 import { collision } from './utils/collision'
 import { BrickSystem } from './systems/BrickSystem'
-import { EventEmitter } from './utils/EventEmitter'
-import { ScoreSystem } from './systems/ScoreSystem'
 import { GameFrame } from './entities/GameFrame'
 import { DroppedPowerUp, PowerUpSystem } from './systems/PowerUpSystem'
+import { gameOverFx, hit1Fx, hit2Fx, music, powerUpFx, stageClearFx } from './sound'
+
+type GameState = 'ready' | 'playing' | 'gameOver' | 'paused'
 
 export class GameField extends PIXI.Container {
-    private emitter = new EventEmitter()
     private background = new GameFrame()
     private platform = new Platform()
     private ball = new Ball()
-    private scoreSystem = new ScoreSystem()
+
     private brickSystem = new BrickSystem()
     private pUpSystem = new PowerUpSystem()
+
     private ballArr: Ball[] = []
     private powerUps: DroppedPowerUp[] = []
+
     private isLaunched = false
+    private state: GameState = 'ready'
+    private inputEnabled = false
+
     private score = 0
+    private levelIndex = 0
+    private lives = INITIAL_LIVES
 
     constructor() {
         super()
+
+        this.brickSystem.loadLevel(levels[this.levelIndex])
         this.ballArr.push(this.ball)
         this.background.position.set(-FRAME_SIZE, -FRAME_SIZE)
+
         window.addEventListener('keydown', this.onKeyDown)
         window.addEventListener('keyup', this.onKeyUp)
-        this.emitter.on('brickHit', () => {
-            this.scoreSystem.setScore(this.score += 10)
-        })
+
         this.addChild(
             this.background,
             this.platform,
             this.ball,
             this.brickSystem,
-            this.scoreSystem,
         )
     }
 
-    public update(delta: number) {
+    public update(delta: number): void {
+        if (this.state === 'gameOver') return
+
         this.platform.update(delta)
 
         if (!this.isLaunched) {
@@ -51,24 +60,40 @@ export class GameField extends PIXI.Container {
 
         for (const ball of this.ballArr) {
             ball.update(delta)
-            if (collision(this.platform, ball)
-            ) {
+            if (collision(this.platform, ball)) {
                 if (ball.velocityY > 0) {
                     const hitPosition = (ball.x - this.platform.x) / (this.platform.width / 2)
                     ball.velocityX = hitPosition * MAX_BOUNCE_SPEED
                     ball.velocityY = -Math.abs(ball.velocityY)
+                    hit1Fx.play()
                 }
             }
 
-            if (this.brickSystem.checkForCollisions(ball)) {
-                this.emitter.emit('brickHit')
+            const brickHit = this.brickSystem.checkForCollisions(ball)
+
+            if (brickHit) {
+                hit2Fx.play()
+                if (ball.velocityY > 0) {
+                    ball.y -= ball.radius
+                } else {
+                    ball.y += ball.radius
+                }
                 ball.velocityY *= -1
 
-                if (Math.random() < 0.2) {
-                    const powerUp = this.pUpSystem.dropRandomPowerUp()
-                    powerUp.sprite.position.set(ball.x, ball.y)
-                    this.powerUps.push(powerUp)
-                    this.addChild(powerUp.sprite)
+                if (brickHit === 'breakable') {
+                    this.score += BRICK_SCORE * (this.levelIndex + 1)
+                    this.emit('scoreChange', this.score)
+
+                    if (Math.random() < 0.2) {
+                        const powerUp = this.pUpSystem.dropRandomPowerUp()
+                        powerUp.sprite.position.set(ball.x, ball.y)
+                        this.powerUps.push(powerUp)
+                        this.addChild(powerUp.sprite)
+                    }
+
+                    if (this.brickSystem.isCleared()) {
+                        this.nextLevel()
+                    }
                 }
             }
         }
@@ -92,6 +117,8 @@ export class GameField extends PIXI.Container {
                     balls: this.ballArr,
                 })
 
+                powerUpFx.play()
+
                 if (newBalls.length > 0) {
                     this.ballArr.push(...newBalls)
                     this.addChild(...newBalls)
@@ -107,19 +134,65 @@ export class GameField extends PIXI.Container {
         this.removeLostBalls()
     }
 
+    public setInputEnabled(value: boolean): void {
+        this.inputEnabled = value
+    }
+
+    public setMoveLeft(value: boolean): void {
+        if (!this.inputEnabled) return
+
+        this.platform.moveLeft = value
+    }
+
+    public setMoveRight(value: boolean): void {
+        if (!this.inputEnabled) return
+
+        this.platform.moveRight = value
+    }
+
+    public launchBall(): void {
+        if (!this.inputEnabled) return
+
+        this.launch()
+        hit1Fx.play()
+    }
+
+    public resetGame(): void {
+        this.score = 0
+        this.lives = INITIAL_LIVES
+        this.levelIndex = 0
+        this.state = 'ready'
+        this.inputEnabled = false
+        this.isLaunched = false
+
+        this.platform.x = PLATFORM_X
+        this.platform.moveLeft = false
+        this.platform.moveRight = false
+
+        this.emit('scoreChange', this.score)
+        this.emit('livesChange', this.lives)
+        this.emit('levelChange', this.levelIndex + 1)
+
+        this.brickSystem.loadLevel(levels[this.levelIndex])
+        this.resetRound()
+    }
+
     private onKeyDown = (event: KeyboardEvent) => {
+        if (!this.inputEnabled) return
+
         switch (event.code) {
             case 'ArrowLeft':
             case 'KeyA':
-                this.platform.moveLeft = true
+                this.setMoveLeft(true)
                 break
 
             case 'ArrowRight':
             case 'KeyD':
-                this.platform.moveRight = true
+                this.setMoveRight(true)
                 break
+
             case 'Space':
-                this.launch()
+                this.launchBall()
                 break
         }
     }
@@ -128,12 +201,12 @@ export class GameField extends PIXI.Container {
         switch (event.code) {
             case 'ArrowLeft':
             case 'KeyA':
-                this.platform.moveLeft = false
+                this.setMoveLeft(false)
                 break
 
             case 'ArrowRight':
             case 'KeyD':
-                this.platform.moveRight = false
+                this.setMoveRight(false)
                 break
         }
     }
@@ -142,11 +215,11 @@ export class GameField extends PIXI.Container {
         if (this.isLaunched) return
 
         this.isLaunched = true
-        this.ball.velocityX = 6
-        this.ball.velocityY = -10
+        this.ball.velocityX = 5
+        this.ball.velocityY = -7
     }
 
-    private reset(): void {
+    private resetRound(): void {
         for (const ball of this.ballArr) {
             this.removeChild(ball)
             ball.destroy()
@@ -182,7 +255,48 @@ export class GameField extends PIXI.Container {
         }
 
         if (this.ballArr.length === 0) {
-            this.reset()
+            this.loseLife()
         }
+    }
+
+    private loseLife(): void {
+        this.lives--
+        this.emit('livesChange', this.lives)
+
+        if (this.lives <= 0) {
+            this.setGameOver()
+            return
+        }
+
+        this.resetRound()
+    }
+
+    private nextLevel(): void {
+        this.emit('levelChange', this.levelIndex + 1)
+        this.levelIndex++
+
+        if (this.levelIndex >= levels.length) {
+            this.levelIndex = 0
+        }
+
+        stageClearFx.play()
+
+
+        this.score += STAGE_CLEAR_SCORE * (this.levelIndex + 1)
+
+        this.emit('scoreChange', this.score)
+
+        this.brickSystem.loadLevel(levels[this.levelIndex])
+        this.resetRound()
+    }
+
+    private setGameOver(): void {
+        if (this.state === 'gameOver') return
+
+        this.state = 'gameOver'
+        this.inputEnabled = false
+        gameOverFx.play()
+        music.stop()
+        this.emit('gameover')
     }
 }

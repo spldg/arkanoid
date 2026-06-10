@@ -26,7 +26,7 @@ export class Platform extends PIXI.Container {
         )
     }
 
-    public update(delta: number) {
+    public update(delta: number): void {
         if (this.moveLeft) {
             this.x -= this.speed * delta
         }

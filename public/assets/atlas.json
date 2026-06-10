@@ -1,6 +1,6 @@
 {
-	"frames": {
-		"pdownslow_0.png": {
+  "frames": {
+    "pdownslow_0.png": {
 			"frame": {
 				"x": 1,
 				"y": 1,
@@ -719,257 +719,521 @@
 				"x": 0.5,
 				"y": 0.5
 			}
-		},
-		"gameover.png": {
-			"frame": {
-				"x": 566,
-				"y": 1,
-				"w": 98,
-				"h": 34
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 98,
-				"h": 34
-			},
-			"sourceSize": {
-				"w": 98,
-				"h": 34
-			},
-			"pivot": {
-				"x": 0.5,
-				"y": 0.5
-			}
-		},
-		"getready.png": {
-			"frame": {
-				"x": 1,
-				"y": 14,
-				"w": 98,
-				"h": 34
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 98,
-				"h": 34
-			},
-			"sourceSize": {
-				"w": 98,
-				"h": 34
-			},
-			"pivot": {
-				"x": 0.5,
-				"y": 0.5
-			}
-		},
-		"pause.png": {
-			"frame": {
-				"x": 101,
-				"y": 14,
-				"w": 66,
-				"h": 34
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 66,
-				"h": 34
-			},
-			"sourceSize": {
-				"w": 66,
-				"h": 34
-			},
-			"pivot": {
-				"x": 0.5,
-				"y": 0.5
-			}
-		},
-		"paddle.png": {
-			"frame": {
-				"x": 169,
-				"y": 14,
-				"w": 32,
-				"h": 11
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 32,
-				"h": 11
-			},
-			"sourceSize": {
-				"w": 32,
-				"h": 11
-			},
-			"pivot": {
-				"x": 0.5,
-				"y": 0.5
-			}
-		},
-		"ui_bg.png": {
-			"frame": {
-				"x": 203,
-				"y": 14,
-				"w": 16,
-				"h": 16
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 16,
-				"h": 16
-			},
-			"sourceSize": {
-				"w": 16,
-				"h": 16
-			},
-			"pivot": {
-				"x": 0.5,
-				"y": 0.5
-			}
-		},
-		"brick.png": {
-			"frame": {
-				"x": 169,
-				"y": 27,
-				"w": 16,
-				"h": 8
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 16,
-				"h": 8
-			},
-			"sourceSize": {
-				"w": 16,
-				"h": 8
-			},
-			"pivot": {
-				"x": 0.5,
-				"y": 0.5
-			}
-		},
-		"ui_wide.png": {
-			"frame": {
-				"x": 187,
-				"y": 27,
-				"w": 10,
-				"h": 16
-			},
-			"rotated": false,
-			"trimmed": true,
-			"spriteSourceSize": {
-				"x": 6,
-				"y": 0,
-				"w": 10,
-				"h": 16
-			},
-			"sourceSize": {
-				"w": 16,
-				"h": 16
-			},
-			"pivot": {
-				"x": 0.5,
-				"y": 0.5
-			}
-		},
-		"ui_narrow.png": {
-			"frame": {
-				"x": 169,
-				"y": 37,
-				"w": 9,
-				"h": 16
-			},
-			"rotated": false,
-			"trimmed": true,
-			"spriteSourceSize": {
-				"x": 7,
-				"y": 0,
-				"w": 9,
-				"h": 16
-			},
-			"sourceSize": {
-				"w": 16,
-				"h": 16
-			},
-			"pivot": {
-				"x": 0.5,
-				"y": 0.5
-			}
-		},
-		"ui_corner.png": {
-			"frame": {
-				"x": 1,
-				"y": 50,
-				"w": 9,
-				"h": 9
-			},
-			"rotated": false,
-			"trimmed": true,
-			"spriteSourceSize": {
-				"x": 7,
-				"y": 7,
-				"w": 9,
-				"h": 9
-			},
-			"sourceSize": {
-				"w": 16,
-				"h": 16
-			},
-			"pivot": {
-				"x": 0.5,
-				"y": 0.5
-			}
-		},
-		"ball.png": {
-			"frame": {
-				"x": 12,
-				"y": 50,
-				"w": 7,
-				"h": 7
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 7,
-				"h": 7
-			},
-			"sourceSize": {
-				"w": 7,
-				"h": 7
-			},
-			"pivot": {
-				"x": 0.5,
-				"y": 0.5
-			}
-		}
-	},
-	"meta": {
-		"app": "http://free-tex-packer.com",
-		"version": "0.6.7",
-		"image": "atlas.png",
-		"format": "RGBA8888",
-		"size": {
-			"w": 665,
-			"h": 60
-		},
-		"scale": 1
-	}
+    },
+    "gameover.png": {
+      "frame": {
+        "x": 566,
+        "y": 1,
+        "w": 98,
+        "h": 34
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 98,
+        "h": 34
+      },
+      "sourceSize": {
+        "w": 98,
+        "h": 34
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "getready.png": {
+      "frame": {
+        "x": 1,
+        "y": 14,
+        "w": 98,
+        "h": 34
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 98,
+        "h": 34
+      },
+      "sourceSize": {
+        "w": 98,
+        "h": 34
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "pause.png": {
+      "frame": {
+        "x": 101,
+        "y": 14,
+        "w": 66,
+        "h": 34
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 34
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 34
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "topScore.png": {
+      "frame": {
+        "x": 169,
+        "y": 14,
+        "w": 62,
+        "h": 7
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 62,
+        "h": 7
+      },
+      "sourceSize": {
+        "w": 62,
+        "h": 7
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "arkanoidTitle.png": {
+      "frame": {
+        "x": 233,
+        "y": 14,
+        "w": 56,
+        "h": 7
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 56,
+        "h": 7
+      },
+      "sourceSize": {
+        "w": 56,
+        "h": 7
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "music.png": {
+      "frame": {
+        "x": 291,
+        "y": 14,
+        "w": 35,
+        "h": 7
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 35,
+        "h": 7
+      },
+      "sourceSize": {
+        "w": 35,
+        "h": 7
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "score.png": {
+      "frame": {
+        "x": 328,
+        "y": 14,
+        "w": 35,
+        "h": 7
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 35,
+        "h": 7
+      },
+      "sourceSize": {
+        "w": 35,
+        "h": 7
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "paddle.png": {
+      "frame": {
+        "x": 365,
+        "y": 14,
+        "w": 32,
+        "h": 11
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 11
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 11
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "btnplay.png": {
+      "frame": {
+        "x": 399,
+        "y": 14,
+        "w": 28,
+        "h": 7
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 28,
+        "h": 7
+      },
+      "sourceSize": {
+        "w": 28,
+        "h": 7
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "startmenu_ui_bg.png": {
+      "frame": {
+        "x": 429,
+        "y": 14,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "ui_bg.png": {
+      "frame": {
+        "x": 399,
+        "y": 23,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "startmenu_ui_wide.png": {
+      "frame": {
+        "x": 417,
+        "y": 23,
+        "w": 10,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 6,
+        "y": 0,
+        "w": 10,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "brick.png": {
+      "frame": {
+        "x": 447,
+        "y": 14,
+        "w": 16,
+        "h": 8
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 8
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 8
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx.png": {
+      "frame": {
+        "x": 465,
+        "y": 14,
+        "w": 14,
+        "h": 7
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 14,
+        "h": 7
+      },
+      "sourceSize": {
+        "w": 14,
+        "h": 7
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "ui_wide.png": {
+      "frame": {
+        "x": 481,
+        "y": 14,
+        "w": 10,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 6,
+        "y": 0,
+        "w": 10,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "startmenu_ui_narrow.png": {
+      "frame": {
+        "x": 465,
+        "y": 23,
+        "w": 9,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 7,
+        "y": 0,
+        "w": 9,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bar.png": {
+      "frame": {
+        "x": 476,
+        "y": 23,
+        "w": 2,
+        "h": 7
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 2,
+        "h": 7
+      },
+      "sourceSize": {
+        "w": 2,
+        "h": 7
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "ui_narrow.png": {
+      "frame": {
+        "x": 447,
+        "y": 24,
+        "w": 9,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 7,
+        "y": 0,
+        "w": 9,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "startmenu_ui_corner.png": {
+      "frame": {
+        "x": 429,
+        "y": 32,
+        "w": 9,
+        "h": 9
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 7,
+        "y": 7,
+        "w": 9,
+        "h": 9
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "ui_corner.png": {
+      "frame": {
+        "x": 493,
+        "y": 14,
+        "w": 9,
+        "h": 9
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 7,
+        "y": 7,
+        "w": 9,
+        "h": 9
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "ball.png": {
+      "frame": {
+        "x": 504,
+        "y": 14,
+        "w": 7,
+        "h": 7
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 7,
+        "h": 7
+      },
+      "sourceSize": {
+        "w": 7,
+        "h": 7
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "atlas.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 665,
+      "h": 49
+    },
+    "scale": 1
+  }
 }

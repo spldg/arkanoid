@@ -1,10 +1,12 @@
 import * as PIXI from 'pixi.js'
 import { GameScene } from './GameScene'
+import { applySavedSoundSettings } from './sound'
+PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST
 
 const app = new PIXI.Application({
     resizeTo: window,
     backgroundColor: 0x202020,
-    antialias: true
+    antialias: false
 })
 
 const container = document.getElementById('pixi-container')
@@ -16,7 +18,9 @@ container.appendChild(app.view)
 
 PIXI.Loader.shared
     .add('game', './assets/atlas.json')
-    .load(() => {
+    .load(async () => {
+        await document.fonts.load('24px "Pixelify Sans"')
+
         const gameScene = new GameScene()
         app.stage.addChild(gameScene)
 
@@ -27,6 +31,7 @@ PIXI.Loader.shared
             gameScene.resize(width, height)
         }
 
+        applySavedSoundSettings()
         resize()
         window.addEventListener('resize', resize)
 

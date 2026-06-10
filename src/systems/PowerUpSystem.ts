@@ -24,7 +24,7 @@ export class PowerUpSystem {
         return { type, sprite }
     }
 
-    public applyPowerUp(options: ApplyPowerUpOptions) {
+    public applyPowerUp(options: ApplyPowerUpOptions): Ball[] {
         switch (options.type) {
             case 'threeBall': {
                 const mainBall = options.balls[0]
@@ -39,12 +39,12 @@ export class PowerUpSystem {
                 break
             case 'slow':
                 for (const ball of options.balls) {
-                    ball.velocityX *= 0.70
-                    ball.velocityY *= 0.70
+                    ball.velocityX *= 0.65
+                    ball.velocityY *= 0.65
 
                     gsap.delayedCall(10, () => {
-                        ball.velocityX /= 0.70
-                        ball.velocityY /= 0.70
+                        ball.velocityX /= 0.65
+                        ball.velocityY /= 0.65
                     })
                 }
                 break
@@ -74,7 +74,7 @@ export class PowerUpSystem {
         })
     }
 
-    private threeBall(ball: Ball) {
+    private threeBall(ball: Ball): Ball[] {
         const secondBall = new Ball()
         const thirdBall = new Ball()
         secondBall.position.set(ball.x, ball.y)

@@ -11,7 +11,12 @@ export const FRAME_SIZE = TILE_SIZE
 export const SCENE_WIDTH = GAME_WIDTH + FRAME_SIZE * 2
 export const SCENE_HEIGHT = GAME_HEIGHT + FRAME_SIZE * 2
 export const PIECE_SIZE = 5
+export const TOP_UI_HEIGHT = 80
+export const BOTTOM_UI_HEIGHT = 120
+export const GAME_LAYER_SCALE = 0.82
 
+export const LAYOUT_WIDTH = SCENE_WIDTH
+export const LAYOUT_HEIGHT = TOP_UI_HEIGHT + SCENE_HEIGHT * GAME_LAYER_SCALE + BOTTOM_UI_HEIGHT
 
 export const startY = 50
 
@@ -26,7 +31,16 @@ export const MAX_BOUNCE_SPEED = 8
 export const BRICK_HEIGHT = 24
 export const BRICK_WIDTH = 48
 
-//power up settings
+// score settings
+
+export const BRICK_SCORE = 100
+export const STAGE_CLEAR_SCORE = 1000
+
+// player settings
+
+export const INITIAL_LIVES = 3
+
+// power up settings
 
 export const POWER_UP_TABLE: { type: PowerUpType; weight: number }[] = [
     { type: 'threeBall', weight: 30 },
@@ -80,9 +94,25 @@ export const POWER_UP_FRAMES: Record<PowerUpType, string[]> = {
 }
 // levels
 
-export const firstLevel = [
-    [1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1],
+export const levels = [
+    [
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+    ],
+    [
+        [1, 0, 1, 1, 0, 1],
+        [1, 1, 0, 0, 1, 1],
+        [0, 1, 1, 1, 1, 0],
+        [1, 0, 1, 1, 0, 1],
+        [1, 1, 1, 1, 1, 1],
+    ],
+    [
+        [0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [0, 0, 1, 1, 0, 0],
+    ],
 ]
