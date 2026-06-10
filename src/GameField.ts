@@ -268,13 +268,13 @@ export class GameField extends PIXI.Container {
     }
 
     private nextLevel(): void {
-        this.emit('levelChange', this.levelIndex + 1)
         this.levelIndex++
 
         if (this.levelIndex >= levels.length) {
             this.levelIndex = 0
         }
 
+        this.emit('levelChange', this.levelIndex + 1)
         stageClearFx.play()
 
 
