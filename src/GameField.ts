@@ -154,7 +154,6 @@ export class GameField extends PIXI.Container {
         if (!this.inputEnabled) return
 
         this.launch()
-        hit1Fx.play()
     }
 
     public resetGame(): void {
@@ -214,6 +213,7 @@ export class GameField extends PIXI.Container {
     private launch(): void {
         if (this.isLaunched) return
 
+        hit1Fx.play()
         this.isLaunched = true
         this.ball.velocityX = 5
         this.ball.velocityY = -7
