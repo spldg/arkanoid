@@ -211,8 +211,8 @@ export class GameField extends PIXI.Container {
 
         hit1Fx.play()
         this.isLaunched = true
-        this.ball.velocityX = 5
-        this.ball.velocityY = -7
+        this.ball.velocityX = 3
+        this.ball.velocityY = -5
     }
 
     private resetRound(): void {

@@ -30,19 +30,16 @@ export class GameScene extends PIXI.Container {
 
         this.gameField.position.set(FRAME_SIZE, FRAME_SIZE)
         this.startMenu.position.set(0, 0)
-        this.scoreSystem.position.set(50, 50)
+        this.scoreSystem.position.set(50, 25)
 
         this.gameLayer.scale.set(GAME_LAYER_SCALE)
         this.gameLayer.position.set(
             (LAYOUT_WIDTH - SCENE_WIDTH * GAME_LAYER_SCALE) / 2,
-            TOP_UI_HEIGHT
+            TOP_UI_HEIGHT - 50
         )
 
-        this.mobileControls.position.set(
-            0,
-            TOP_UI_HEIGHT + SCENE_HEIGHT * GAME_LAYER_SCALE - 20
-        )
-        this.mobileControls.visible = this.isMobileInput()
+        this.mobileControls.position.set(0, TOP_UI_HEIGHT + SCENE_HEIGHT * GAME_LAYER_SCALE - 90)
+        this.mobileControls.visible = false
 
         this.getReady.position.set(SCENE_WIDTH / 2, SCENE_HEIGHT / 2)
         this.getReady.scale.set(2)
@@ -129,7 +126,7 @@ export class GameScene extends PIXI.Container {
         this.scoreSystem.visible = true
         this.getReady.visible = true
         this.gameField.visible = true
-
+        this.mobileControls.visible = this.isMobileInput()
         this.gameField.setInputEnabled(false)
 
         music.play()

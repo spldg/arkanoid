@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js'
 import { GameScene } from './GameScene'
 import { applySavedSoundSettings } from './sound'
+import { ASSET_VERSION } from './constants'
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST
 
 const app = new PIXI.Application({
@@ -17,7 +18,7 @@ if (!container) {
 container.appendChild(app.view)
 
 PIXI.Loader.shared
-    .add('game', './assets/atlas.json')
+    .add('game', `./assets/atlas.json?v=${ASSET_VERSION}`)
     .load(async () => {
         await document.fonts.load('24px "Pixelify Sans"')
 

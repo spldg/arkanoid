@@ -1,43 +1,48 @@
 import { Howl } from 'howler'
+import { ASSET_VERSION } from './constants'
+
+function asset(path: string): string {
+    return `${path}?v=${ASSET_VERSION}`
+}
 
 export const music = new Howl({
-    src: ['./assets/music.mp3'],
+    src: [asset('./assets/music.mp3')],
     loop: true,
     volume: 0.4,
 })
 
 export const powerUpFx = new Howl({
-    src: ['./assets/powerup.mp3'],
+    src: [asset('./assets/powerup.mp3')],
     volume: 0.4,
 })
 
 export const hit1Fx = new Howl({
-    src: ['./assets/hit1.mp3'],
+    src: [asset('./assets/hit1.mp3')],
     volume: 0.4,
 })
 
 export const hit2Fx = new Howl({
-    src: ['./assets/hit2.mp3'],
+    src: [asset('./assets/hit2.mp3')],
     volume: 0.4,
 })
 
 export const pauseFx = new Howl({
-    src: ['./assets/pause.mp3'],
+    src: [asset('./assets/pause.mp3')],
     volume: 0.4,
 })
 
 export const gameOverFx = new Howl({
-    src: ['./assets/gameOver.mp3'],
+    src: [asset('./assets/gameOver.mp3')],
     volume: 0.4,
 })
 
 export const roundStartFx = new Howl({
-    src: ['./assets/roundStart.mp3'],
+    src: [asset('./assets/roundStart.mp3')],
     volume: 0.4,
 })
 
 export const stageClearFx = new Howl({
-    src: ['./assets/stageclear.mp3'],
+    src: [asset('./assets/stageclear.mp3')],
     volume: 0.4,
 })
 

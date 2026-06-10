@@ -60,6 +60,7 @@ export class BrickSystem extends PIXI.Container {
         for (let row = 0; row < level.length; row++) {
             for (let col = 0; col < level[row].length; col++) {
                 const cell = level[row][col]
+                if (cell === 3) continue
                 const isBreakable = cell === 1
                 const brick = new Brick(this.texture!, isBreakable)
 
@@ -104,7 +105,7 @@ export class BrickSystem extends PIXI.Container {
                 x: piece.x + Math.random() * 40 - 40,
                 y: piece.y + Math.random() * 55 - 30,
                 rotation: Math.random() * 3 + 3,
-                duration: Math.random() * 0.45 + 0.25,
+                duration: Math.random() * 0.47 + 0.25,
                 alpha: 0,
                 onComplete: () => {
                     this.removeChild(piece)

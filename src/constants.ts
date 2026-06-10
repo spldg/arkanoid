@@ -1,19 +1,19 @@
 import type { PowerUpType } from './systems/PowerUpSystem'
-
+export const ASSET_VERSION = '2026-06-11'
 // sizes
 
 export const GAME_WIDTH = 352
-export const GAME_HEIGHT = 800
+export const GAME_HEIGHT = 640
 
 export const SOURCE_TILE_SIZE = 16
 export const TILE_SIZE = 32
 export const FRAME_SIZE = TILE_SIZE
 export const SCENE_WIDTH = GAME_WIDTH + FRAME_SIZE * 2
 export const SCENE_HEIGHT = GAME_HEIGHT + FRAME_SIZE * 2
-export const PIECE_SIZE = 5
+export const PIECE_SIZE = 7
 export const TOP_UI_HEIGHT = 80
 export const BOTTOM_UI_HEIGHT = 120
-export const GAME_LAYER_SCALE = 0.82
+export const GAME_LAYER_SCALE = 0.9
 
 export const LAYOUT_WIDTH = SCENE_WIDTH
 export const LAYOUT_HEIGHT = TOP_UI_HEIGHT + SCENE_HEIGHT * GAME_LAYER_SCALE + BOTTOM_UI_HEIGHT
@@ -24,7 +24,7 @@ export const startY = 50
 
 export const PLATFORM_X = GAME_WIDTH / 2
 export const PLATFORM_Y = GAME_HEIGHT - 80
-export const MAX_BOUNCE_SPEED = 7
+export const MAX_BOUNCE_SPEED = 5
 
 // brick settings
 
@@ -96,9 +96,26 @@ export const POWER_UP_FRAMES: Record<PowerUpType, string[]> = {
 
 export const levels = [
     [
+        [3, 3, 3, 3, 3, 3],
+        [1, 1, 3, 3, 1, 1],
+        [3, 1, 3, 3, 1, 3],
+        [3, 3, 3, 3, 3, 3],
+        [3, 3, 3, 3, 3, 3],
+        [3, 1, 3, 3, 1, 3],
+        [3, 1, 3, 3, 1, 3],
+        [3, 1, 1, 1, 1, 3],
+    ],
+    [
         [1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+    ],
+    [
+        [1, 0, 1, 1, 0, 1],
+        [1, 1, 0, 0, 1, 1],
+        [0, 1, 1, 1, 1, 0],
+        [1, 0, 1, 1, 0, 1],
         [1, 1, 1, 1, 1, 1],
     ],
     [
@@ -107,12 +124,5 @@ export const levels = [
         [1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1],
         [0, 0, 1, 1, 0, 0],
-    ],
-    [
-        [1, 0, 1, 1, 0, 1],
-        [1, 1, 0, 0, 1, 1],
-        [0, 1, 1, 1, 1, 0],
-        [1, 0, 1, 1, 0, 1],
-        [1, 1, 1, 1, 1, 1],
     ],
 ]

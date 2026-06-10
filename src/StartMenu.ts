@@ -12,7 +12,7 @@ export class StartMenu extends PIXI.Container {
     private musicLabel = new PIXI.Sprite(this.textures['music.png'])
     private fxLabel = new PIXI.Sprite(this.textures['fx.png'])
     private topScoreLabel = new PIXI.Sprite(this.textures['topScore.png'])
-
+    private playButtonBorder = new PIXI.Graphics()
     private topScoreText = new PIXI.Text('000000', {
         fontFamily: 'Pixelify Sans',
         fontSize: 40,
@@ -43,6 +43,7 @@ export class StartMenu extends PIXI.Container {
             this.topScoreLabel,
             this.topScoreText,
             this.title,
+            this.playButtonBorder,
             this.playButton,
             this.musicLabel,
             this.fxLabel,
@@ -81,6 +82,14 @@ export class StartMenu extends PIXI.Container {
         this.playButton.anchor.set(0.5)
         this.playButton.scale.set(4)
         this.playButton.position.set(FRAME_SIZE + GAME_WIDTH / 2, 400)
+
+        const padding = 24
+
+        this.playButtonBorder
+            .lineStyle(4, 0x14cf1b)
+            .drawRect(-this.playButton.width / 2 - padding, -this.playButton.height / 2 - padding, this.playButton.width + padding * 2, this.playButton.height + padding * 2)
+
+        this.playButtonBorder.position.copyFrom(this.playButton.position)
 
         this.playButton.interactive = true
         this.playButton.buttonMode = true

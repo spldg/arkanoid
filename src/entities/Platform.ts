@@ -7,7 +7,7 @@ export class Platform extends PIXI.Container {
     public moveLeft = false
     public moveRight = false
     private texture = PIXI.Loader.shared.resources.game.textures?.['paddle.png']
-    private speed = 8
+    private speed = 5
     private platform
     constructor() {
         super()
