@@ -5,56 +5,90 @@ function asset(path: string): string {
     return `${path}?v=${ASSET_VERSION}`
 }
 
+function loadSound(sound: Howl): Promise<void> {
+    return new Promise((resolve, reject) => {
+        if (sound.state() === 'loaded') {
+            resolve()
+            return
+        }
+
+        sound.once('load', () => {
+            resolve()
+        })
+
+        sound.once('loaderror', (_, error) => {
+            reject(error)
+        })
+
+        sound.load()
+    })
+}
+
 export const music = new Howl({
     src: [asset('./assets/music.mp3')],
     loop: true,
     volume: 0.4,
+    preload: false,
 })
 
 export const powerUpFx = new Howl({
     src: [asset('./assets/powerup.mp3')],
     volume: 0.4,
+    preload: false,
 })
 
 export const hit1Fx = new Howl({
     src: [asset('./assets/hit1.mp3')],
     volume: 0.4,
+    preload: false,
 })
 
 export const hit2Fx = new Howl({
     src: [asset('./assets/hit2.mp3')],
     volume: 0.4,
-})
-
-export const pauseFx = new Howl({
-    src: [asset('./assets/pause.mp3')],
-    volume: 0.4,
+    preload: false,
 })
 
 export const gameOverFx = new Howl({
     src: [asset('./assets/gameOver.mp3')],
     volume: 0.4,
+    preload: false,
 })
 
 export const roundStartFx = new Howl({
     src: [asset('./assets/roundStart.mp3')],
     volume: 0.4,
+    preload: false,
 })
 
 export const stageClearFx = new Howl({
     src: [asset('./assets/stageclear.mp3')],
     volume: 0.4,
+    preload: false,
 })
 
 export const fxSounds = [
     powerUpFx,
     hit1Fx,
     hit2Fx,
-    pauseFx,
     gameOverFx,
     roundStartFx,
     stageClearFx,
 ]
+
+export function loadSounds(): Promise<void> {
+    return Promise
+        .all([
+            music,
+            powerUpFx,
+            hit1Fx,
+            hit2Fx,
+            gameOverFx,
+            roundStartFx,
+            stageClearFx,
+        ].map(loadSound))
+        .then(() => undefined)
+}
 
 export function setMusicVolume(level: number): void {
     music.volume(level / 5)

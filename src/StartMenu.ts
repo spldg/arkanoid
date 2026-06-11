@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
 import { GAME_WIDTH, FRAME_SIZE } from './constants'
 import { StartMenuFrame } from './entities/StartMenuFrame'
-import { pauseFx, setFxVolume, setMusicVolume } from './sound'
+import { hit1Fx, setFxVolume, setMusicVolume } from './sound'
 
 export class StartMenu extends PIXI.Container {
     private textures = PIXI.Loader.shared.resources.game.textures!
@@ -140,12 +140,12 @@ export class StartMenu extends PIXI.Container {
                 if (kind === 'music') {
                     this.musicLevel = level
                     setMusicVolume(level)
-                    pauseFx.play()
+                    hit1Fx.play()
                     this.redrawMusicBars()
                 } else {
                     this.fxLevel = level
                     setFxVolume(level)
-                    pauseFx.play()
+                    hit1Fx.play()
                     this.redrawFxBars()
                 }
             })

@@ -129,12 +129,12 @@ export class GameScene extends PIXI.Container {
         this.mobileControls.visible = this.isMobileInput()
         this.gameField.setInputEnabled(false)
 
-        music.play()
         roundStartFx.play()
 
         gsap.delayedCall(3, () => {
             this.getReady.visible = false
             this.gameField.setInputEnabled(true)
+            music.play()
         })
     }
 
